@@ -16,4 +16,5 @@ function [e_equid, e_chebyshev] = testLagrangeStability
     e_equid(count) = lagrangeStability(@cos, x_equid, 10^(-2))
     e_chebyshev(count) = lagrangeStability(@cos, x_chebyshev, 10^(-2))
   end
+  count = count + 1;
 end
