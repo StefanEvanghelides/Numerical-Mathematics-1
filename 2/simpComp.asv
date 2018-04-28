@@ -1,21 +1,9 @@
-
-% Composite simpson formula using error estimating by mesh halving
-% INPUT
-% f         function handle (the integrand)
-% a         beginpoint of the integration interval
-% b         endpoint of the integration interval
-% tol       desired accuracy
-% hMin      smallest permissable interval length
-% OUTPUT
-% int       approximation to integral of f over the interval [a,b]
-% flag      if 1: tol not attained, 0: tol attained
-% stats     struct containing data about error estimates per number of intervals
 function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
     % Initialise variables
     h = b - a;
     n = 1;
-    c = (a + b) / 2;
-    int = h / 6 * (f(a) + f(b) + 4 * f(c));
+    x_mean = (a+b)/2;
+    int = h / 6 * (f(a) + f(b)) + h / 3 * x_mean;
     flag = 1;
 
     if nargout == 3
@@ -24,7 +12,6 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
 
     while h > hMin
         h = h / 2;
-        c = c / 2;
         n = 2 * n;
         if h < eps % Check if h is not "zero"
             break;
@@ -33,7 +20,7 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
         % Update the integral with the new nodes
         intNew = int / 2;
         for j = 1 : 2 : n
-            intNew = intNew + h * 4 * f(c) + 4 * f();
+            intNew = intNew + h / 3 * f(a + j * h) + ;
         end
 
         % Estimate the error
@@ -49,4 +36,5 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
             break
         end
     end
+   
 end
