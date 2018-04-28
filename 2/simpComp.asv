@@ -20,8 +20,7 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
         % Update the integral with the new nodes
         intNew = int / 2;
         for j = 1 : 2 : n
-            mean_interval = (j * (j + 1))/2;
-            intNew = intNew + h / 3 * (f(a + j * h) + 2 * f(a + mean_interval * h));
+            intNew = intNew + h / 3 * f(a + j * h) + ;
         end
 
         % Estimate the error
