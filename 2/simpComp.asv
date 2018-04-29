@@ -2,8 +2,7 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
     % Initialise variables
     h = b - a;
     n = 1;
-    x_mean = (a+b)/2;
-    int = h / 6 * (f(a) + f(b)) + h / 3 * x_mean;
+    int = h / 6 * (f(a) + f(b));
     flag = 1;
 
     if nargout == 3
@@ -20,7 +19,8 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
         % Update the integral with the new nodes
         intNew = int / 2;
         for j = 1 : 2 : n
-            intNew = intNew + h / 3 * f(a + j * h) + ;
+            mean_interval = (j * h + h/2);
+            intNew = intNew + (h / 3) * (f(a + j * h) + 2 * f(a + mean_interval));
         end
 
         % Estimate the error
