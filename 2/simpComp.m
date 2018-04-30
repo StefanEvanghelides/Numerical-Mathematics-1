@@ -23,7 +23,6 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
 
     while h > hMin
         h = h / 2;
-        c = c / 2;
         n = 2 * n;
         if h < eps % Check if h is not "zero"
             break;
