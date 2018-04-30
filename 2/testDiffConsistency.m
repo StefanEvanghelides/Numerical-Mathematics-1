@@ -7,11 +7,14 @@ rng(10);
 x = rand;
 
 digits(4);
-disp('eps:'); disp(eps);
 
-[errList_left, errList_right, hList] = diffConsistency(f,df,x,iMax,h0);
+[errList, hList] = diffConsistency(f,df,x,iMax,h0);
 disp('hList:'); disp(vpa(hList));
-disp('errList:'); disp(vpa(errList_left));
+disp('errList:'); disp(vpa(errList));
 
-x_axis = logspace(-1, -20);
-loglog(x_axis, f);
+log_h = logspace(0, -20, iMax);
+loglog(log_h, errList);
+title('Log of Absolut Error versus log of h');
+xlabel('h value');
+ylabel('error based on h');
+legend('error');
