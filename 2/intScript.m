@@ -31,7 +31,6 @@ fprintf('Flag: %d (for a tolerance of %d)\n\n', flag_simp, tol);
 % Testing for i=1:10
 %for i = 1:10
  %    tol = 10^-i;
-
 %end  
 
 
