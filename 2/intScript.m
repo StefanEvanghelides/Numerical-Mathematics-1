@@ -5,12 +5,15 @@ tol = 10^-10;
 f = @(x)(atan(sqrt(x)));
 a = 0; b = 2;
 hMin = 10^-6;
-for i = 1:4
+for i = 1:10
      tol = 10^-i;
      [value_simp,flag_simp,simp_stats(i)] = simpComp(f,a,b,tol,hMin);
      [value_trap,flag_trap,trap_stats(i)] = trapComp(f,a,b,tol,hMin); 
-     simp_stats(i).totalNrIntervals(end)
-     simp_stats(i).totalErEst
-     trap_stats(i).totalNrIntervals
-     trap_stats(i).totalErEst
+     fprintf('Desired accuracy attained: %d\n', flag_simp) 
+     fprintf('Integral approximation: %d\n', desired_result - value_simp)
+%      simp_stats(i).totalNrIntervals(end)
+%      simp_stats(i).totalErEst
+%      fprintf('total error %d', simp_stats(i).totalErEst)
+%      trap_stats(i).totalNrIntervals(end)
+%      trap_stats(i).totalErEst
 end  

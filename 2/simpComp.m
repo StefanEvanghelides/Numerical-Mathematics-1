@@ -17,7 +17,7 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
         end
 
         % Update the integral with the new nodes
-        intNew = int;
+        intNew = int; 
         for j = 1 : 2 : n
             intNew = intNew + ((2 * h) / 3) * f(a + (j+1) * h) + ...
                 ((4 * h) / 3) * f(a + j*h) ;
