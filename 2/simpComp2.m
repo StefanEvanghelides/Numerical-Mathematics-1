@@ -30,15 +30,13 @@ function [int, flag, stats] = simpComp2(f, a, b, tol, hMin)
 
         % Update the integral with the new nodes
         intNew = int/2; 
-        for j = 1 : n
-            intNew = intNew + 4 * f(a + (2*j-1) * h / 2);
+        for j = 1 : 2 : n
+            intNew = intNew + ((4 * h) / 6) * f(a + (j+1) * h) + ...
+                ((2 * h) / 6) * f(a + j*h) ;
         end
 
         % Estimate the error
-        errorEst = 1 / 3 * (int - intNew);
-        
-        
-        
+        errorEst = 1 / 3 * (int - intNew);  
         int = intNew;
         if nargout == 3 % Update stats
             stats.totalErEst = [stats.totalErEst; abs(errorEst)];
