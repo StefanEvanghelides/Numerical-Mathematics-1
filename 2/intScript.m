@@ -20,7 +20,7 @@ fprintf('Error TrapComp: %d\n', abs(integral - value_trap));
 fprintf('Flag: %d (for a tolerance of %d)\n\n', flag_trap, tol);
 
 % Test the SimpComp approximation
-simpCompVariant = @simpComp2; % This is used to test variants of SimpComp function;
+simpCompVariant = @simpComp; % This is used to test variants of SimpComp function;
                               % Modify only the function handle to update
                               %     the rest automatically;
 [value_simp,flag_simp,simp_stats] = simpCompVariant(f,a,b,tol,hMin);
@@ -31,15 +31,7 @@ fprintf('Flag: %d (for a tolerance of %d)\n\n', flag_simp, tol);
 % Testing for i=1:10
 %for i = 1:10
  %    tol = 10^-i;
- %    [value_simp,flag_simp,simp_stats(i)] = simpComp(f,a,b,tol,hMin);
- %    [value_trap,flag_trap,trap_stats(i)] = trapComp(f,a,b,tol,hMin); 
-     %fprintf('Desired accuracy attained: %d\n', flag_simp) 
-     %fprintf('Integral approximation: %d\n', desired_result - value_simp)
-%      simp_stats(i).totalNrIntervals(end)
-%      simp_stats(i).totalErEst
-%      fprintf('total error %d', simp_stats(i).totalErEst)
-%      trap_stats(i).totalNrIntervals(end)
-%      trap_stats(i).totalErEst
+
 %end  
 
 
