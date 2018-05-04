@@ -8,7 +8,7 @@ f = @(x)(atan(sqrt(x)));
 a = 0; b = 2;
 
 % Setting the lowest equidistant value
-hMin = 10^-6;
+hMin = 10^-7;
 
 % Show the actual integral result
 fprintf('Actual integral result: %d\n\n', integral);
