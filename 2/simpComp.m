@@ -37,7 +37,7 @@ function [int, flag, stats] = simpComp(f, a, b, tol, hMin)
 
         % Estimate the error
         int = intNew / 2;
-        errorEst = 1 / 3 * (int - intNew);
+        errorEst = 1 / 15 * (int - intNew);
         if nargout == 3 % Update stats
             stats.totalErEst = [stats.totalErEst; abs(errorEst)];
             stats.totalNrIntervals = [stats.totalNrIntervals; n / 2];
