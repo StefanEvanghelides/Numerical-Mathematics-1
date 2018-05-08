@@ -15,6 +15,12 @@ rel_err_QR      = zeros(16,1);
 upp_err_QR      = zeros(16,1);
 epsilon         = zeros(16,1);
 
+% Calculate K_2
+A = makeVandermondeMatrix(x,8);
+disp(cond(A.' * A,2));
+[Q, R] = qr(A,0);
+disp(cond(R,2));
+
 % Run the experiments
 for i = 1:16
     epsilon(i) = 10^-i;
@@ -38,7 +44,7 @@ for i = 1:16
     % Calculate relative error for QR factorization
     rel_err_QR(i) = sum(norm(c_QR - e));
     % Calculate upper bound for error
-    upp_err_QR(i) = (cond(Q*R)*(norm(y_perturbed)/norm(y)));
+    upp_err_QR(i) = (cond(R)*(norm(y_perturbed)/norm(y)));
 
 end
 loglog(epsilon,rel_err_normal, '-s');
@@ -46,5 +52,7 @@ hold on
 loglog(epsilon,upp_err_normal, '-s');
 loglog(epsilon,rel_err_QR, '-s');
 loglog(epsilon,upp_err_QR, '-s');
+ylabel('relative error of solutions and upper bounds')
+xlabel('\epsilon')
 grid on;
 hold off
