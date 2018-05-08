@@ -1,0 +1,44 @@
+
+%Construct the data points and initialize
+x = zeros(21,1);
+y = zeros(21,1);
+for i = 1:21
+   x(i) = (i-1)/20;
+   y(i) = x(i)^8;
+end
+% Exact solution
+e = [0 0 0 0 0 0 0 0 1].';
+% Error vectors
+rel_err_normal  = zeros(16,1);
+rel_err_QR      = zeros(16,1);
+epsilon         = zeros(16,1);
+
+% Run the experiments
+for i = 1:16
+    epsilon(i) = 10^-i;
+    x_error = (2*epsilon(i)).*rand(21,1) - epsilon(i);
+    y_error = (2*epsilon(i)).*rand(21,1) - epsilon(i);
+    x_perturbed = x + x_error;
+    y_perturbed = y + y_error;
+    
+    A = makeVandermondeMatrix(x_perturbed,8);
+    % Solve regular normal equation
+    c_normal = (A.'*A) \ (A.'*y);
+    disp(c_normal)
+    % Calculate relative error for normal equation
+    rel_err_normal(i) = sum(abs(c_normal - e));
+    % Calculate upper bound for error
+    
+    % Calculate QR factorization
+    [Q, R] = qr(A,0);
+    % Solve QR equation
+    c_QR = R \ (Q.'*y);
+    % Calculate relative error for QR factorization
+    rel_err_QR(i) = sum(abs(c_QR - e));
+    % Calculate upper bound for error
+
+end
+loglog(epsilon,rel_err_normal, '-s');
+hold on
+loglog(epsilon,rel_err_QR, '-s');
+grid on;
