@@ -1,20 +1,26 @@
-% This script is used to test the naive LU factorization
+% This script is used to solve the experiment withOUT pivoting
 
-% Predefine A, x, b
-A = [1, 2, 3;
-     4, 5, 6;
-     7, 8, 8];
- 
-x = [1; 2; 3];
-
-b = A * x;
-
-% Knowing A and b, we will try to find x by decomposing A into LU factors
-[L, U] = luNaive(A);
-
-% Displaying results
-L
-U
-L * U
-A
-x1 = (L * U) \ b
+n = 2;
+y = [1; 2];
+r = n-1;
+for i = 1:16
+    epsilon = 10^(-i);
+    x = [epsilon; 1];
+    A = makeVandermondeMatrix(x, r);
+    [c_hat, L, U] = luNaive(A, y);
+    
+    % Relative error
+    c_hat
+    
+    % K_2 condition numbers of A
+    
+    % K_2 condition numbers of L
+    
+    % K_2 condition numbers of U
+    
+    % Factorisation error
+    
+    % Plot of the above 5 quatities
+    
+    break;
+end

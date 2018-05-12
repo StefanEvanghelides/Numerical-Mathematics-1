@@ -5,7 +5,8 @@
 % x         solution such that A*x=b
 % L         lower triangular matrix such that A = L*U
 % U         upper triangular matrix such that A = L*U
-function [L, U] = luNaive(A)
+function [x, L, U] = luNaive(A, b)
+    % Computing L and U
     n = length(A);
     L = eye(n); % Identity matrix
     U = A;
@@ -17,4 +18,7 @@ function [L, U] = luNaive(A)
             end
         end
     end
+    
+    % Computing x based on L,U and b:
+    x = (L * U) \ b;
 end
