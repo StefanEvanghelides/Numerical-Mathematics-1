@@ -14,7 +14,7 @@ disp('errList:'); disp(vpa(errList));
 
 log_h = logspace(0, -20, iMax);
 loglog(log_h, errList);
-title('Log of Absolut Error versus log of h');
+title('Log of Absolute Error versus log of h');
 xlabel('h value');
 ylabel('error based on h');
 legend('error');
