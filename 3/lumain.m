@@ -10,19 +10,19 @@ for i = 1:16
     [c_hat, L, U] = luNaive(A, y);
     
     % Relative error
-    rel_err(i) = norm(c - c_est)/norm(c);
+    %rel_err(i) = norm(c - c_est)/norm(c);
     
-    % K_2 condition numbers of A
-    cond(A, 2);
+    % K condition numbers of A
+    K2_A(i) = cond(A, 2)
     
     % K_2 condition numbers of L
-    cond(L,2);
+    K2_L(i) = cond(L,2)
     
     % K_2 condition numbers of U
-    cond(U,2);
+    K2_U(i) = cond(U,2)
     
     % Factorisation error
-    cond(A - L*U,'fro');
+    fact_err(i) = cond(A - L*U, 'fro')
     
     % Plot of the above 5 quatities
     
