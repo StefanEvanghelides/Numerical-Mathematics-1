@@ -11,6 +11,7 @@ for i = 1:16
     
     % Relative error
     c_hat
+    nrm = norm(c_hat)
     
     % K_2 condition numbers of A
     
