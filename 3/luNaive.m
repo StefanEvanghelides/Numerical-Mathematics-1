@@ -20,5 +20,6 @@ function [x, L, U] = luNaive(A, b)
     end
     
     % Computing x based on L,U and b:
-    x = (L * U) \ b;
+    y = L \ b;
+    x = U \ y;
 end
