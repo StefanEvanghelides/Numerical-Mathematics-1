@@ -1,5 +1,5 @@
 % INPUT
-% x         nodal points x_i
+% x         nodal points x_i, as a col vector. Add ' to make it row vector
 % r         polynomial degree
 function A = makeVandermondeMatrix(x, r)
 %     x = x(:);
