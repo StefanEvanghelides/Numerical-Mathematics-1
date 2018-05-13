@@ -1,13 +1,14 @@
 % INPUT
 % lu_function       Either luNaive or luPivot used for testing
 % OUTPUT
-% rel_err           relative error of the solution
+% epsilon           Values of epsilon
+% rel_err           Relative error of the solution
 % K2_A              K-2 condition number of A
 % K2_L              K-2 condition number of L
 % K2_U              K-2 condition number of U
-% fact_err          factorisation error
+% fact_err          Factorisation error
 
-function [rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function)
+function [epsilon, rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function)
     n = 2;
     y = [1; 2];
     r = n-1;
@@ -24,7 +25,7 @@ function [rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function)
         A = makeVandermondeMatrix(x, r);
         [c_hat, L, U] = lu_function(A, y);
 
-        c = c_hat;
+        c = A \ y;
 
         % Relative error
         rel_err(i) = norm(c_hat - c)/norm(c);
