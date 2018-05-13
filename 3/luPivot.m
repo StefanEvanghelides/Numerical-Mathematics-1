@@ -5,14 +5,16 @@
 % x         solution such that A*x=b
 % L         lower triangular matrix such that A = L*U
 % U         upper triangular matrix such that A = L*U
+% P         permutation matrix
 function [x, L, U, P] = luPivot(A, b)
     % Computing L and U
     n = length(A);
-    P = eye(n); % Identity matrix
+    P = eye(n);
     L = zeros(n);
     U = A;
     for k = 1 : n
         % Find r_hat such that |U(r_hat,k)| = max (r=k,...,n) |U(r,k)|
+        
         % Swap r_hat-th row with the r-th row in L, U and P
         
         for i = k+1 : n
