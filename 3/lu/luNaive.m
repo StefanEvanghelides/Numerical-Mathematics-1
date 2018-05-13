@@ -8,7 +8,7 @@
 function [x, L, U] = luNaive(A, b)
     % Computing L and U
     n = length(A);
-    L = eye(n); % Identity matrix
+    L = eye(n);
     U = A;
     for k = 1 : n
         for i = k+1 : n
