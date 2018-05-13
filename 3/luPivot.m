@@ -14,8 +14,28 @@ function [x, L, U, P] = luPivot(A, b)
     U = A;
     for k = 1 : n
         % Find r_hat such that |U(r_hat,k)| = max (r=k,...,n) |U(r,k)|
+        [temp, r_hat] = max(abs(U(k:n, k)));
+        r_hat = r_hat + k - 1;
+
+        % Swap rows in U
+        temp = U(k,:);
+        U(k,:) = U(r_hat,:);
+        U(r_hat,:) = temp;
         
-        % Swap r_hat-th row with the r-th row in L, U and P
+        % Swap rows in L
+        temp = L(k,:);
+        L(k,:) = L(r_hat,:);
+        L(r_hat,:) = temp;
+        
+        % Swap rows in P
+        temp = P(k,:);
+        P(k,:) = P(r_hat,:);
+        P(r_hat,:) = temp;
+        
+        % Swap rows in b
+        temp = b(k);
+        b(k) = b(r_hat);
+        b(r_hat) = temp;
         
         for i = k+1 : n
             L(i,k) = U(i,k)/U(k,k);
@@ -23,8 +43,8 @@ function [x, L, U, P] = luPivot(A, b)
                U(i,j) = U(i,j) - L(i,k) * U(k,j);
             end
         end
+        L(k,k) = 1;
     end
-    L(k,k) = 1;
     
     % Computing x based on L, U and b:
     y = L \ b;
