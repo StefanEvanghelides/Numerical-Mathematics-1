@@ -1,14 +1,20 @@
-% This script is used to solve the experiment withOUT pivoting
+% This script is used to solve the experiment WITH pivoting
 
 n = 2;
 y = [1; 2];
 r = n-1;
+epsilon = zeros(1,16);
+rel_err = zeros(1,16);
+K2_A = zeros(1,16);
+K2_L = zeros(1,16);
+K2_U = zeros(1,16);
+fact_err = zeros(1,16);
 for i = 1:16
     epsilon(i) = 10^-i;
     
     x = [epsilon(i); 1];
     A = makeVandermondeMatrix(x, r);
-    [c_hat, L, U] = luNaive(A, y);
+    [c_hat, L, U, P] = luPivot(A, y);
     
     c = c_hat;
     
@@ -40,7 +46,7 @@ loglog(epsilon, fact_err, 'k-s', 'DisplayName', 'Fact err')
 hold off
 set(gca, 'XDir','reverse');
 ylim([-inf 3.3]);
-title('Error for different Quatities');
-xlabel('Errors');
-ylabel('Epsilon');
+title('Error for luPivot');
+xlabel('Epsilon');
+ylabel('Errors');
 legend('Location', 'east');
