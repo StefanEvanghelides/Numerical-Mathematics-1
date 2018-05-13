@@ -5,7 +5,7 @@
 % NOTE: this variable should be either @luNaive or @luPivot
 lu_function_handle = @luNaive;
 
-[rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function_handle);
+[epsilon, rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function_handle);
 
 loglog(epsilon, rel_err, 'c-s', 'DisplayName', 'Rel err');
 hold on
