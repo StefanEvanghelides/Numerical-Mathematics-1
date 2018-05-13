@@ -10,8 +10,10 @@ for i = 1:16
     A = makeVandermondeMatrix(x, r);
     [c_hat, L, U] = luNaive(A, y);
     
+    c = c_hat;
+    
     % Relative error
-    %rel_err(i) = norm(c - c_est)/norm(c);
+    rel_err(i) = norm(c_hat - c)/norm(c);
     
     % K condition numbers of A
     K2_A(i) = cond(A, 2);
@@ -28,13 +30,17 @@ for i = 1:16
 end
 
 % Plot of the above 5 quatities
-log_h = logspace(0, 16, 16);
-loglog(log_h, K2_A, 'b- .'); hold on;
-loglog(log_h, K2_L, 'r--s');
-loglog(log_h, K2_U, 'g- .');
-loglog(log_h, fact_err, 'k-s');
-%loglog(log_h, rel_err);
-title('Title');
-xlabel('x label');
-ylabel('y label');
-legend('K2_A', 'K2_L', 'K2_U', 'Factorization error');
+
+loglog(epsilon, rel_err, 'c-s', 'DisplayName', 'Rel err');
+hold on
+loglog(epsilon, K2_A, 'b- .', 'DisplayName', 'K_2(A)') 
+loglog(epsilon, K2_L, 'r--s', 'DisplayName', 'K_2(L)')
+loglog(epsilon, K2_U, 'g- .', 'DisplayName', 'K_2(U)')
+loglog(epsilon, fact_err, 'k-s', 'DisplayName', 'Fact err')
+hold off
+set(gca, 'XDir','reverse');
+ylim([-inf 3.3]);
+title('Error for different Quatities');
+xlabel('Errors');
+ylabel('Epsilon');
+legend('Location', 'east');
