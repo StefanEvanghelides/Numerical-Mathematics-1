@@ -55,7 +55,7 @@ loglog(epsilon,upp_err_QR, '-s');
 ylabel('relative error of solutions and upper bounds')
 xlabel('\epsilon')
 grid on;
-legend({'Normal error', 'Normal upper bound', 'QR error', 'QR upper bound'});
+legend({'Normal error', 'Normal upper bound', 'QR error', 'QR upper bound'}, 'Location', 'southwest');
 set(gca, 'XDir','reverse');
 title('Least square method errors');
 hold off
