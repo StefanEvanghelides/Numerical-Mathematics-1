@@ -12,9 +12,9 @@ function [x, L, U] = luNaive(A, b)
     U = A;
     for k = 1 : n
         for i = k+1 : n
-            L(i,k) = U(i,k)/U(k,k);
+            L(i,k) = U(i,k)./U(k,k);
             for j = k : n
-               U(i,j) = U(i,j) - L(i,k) * U(k,j);
+               U(i,j) = U(i,j) - L(i,k) .* U(k,j);
             end
         end
     end

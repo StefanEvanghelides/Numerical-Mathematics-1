@@ -22,7 +22,7 @@ function [epsilon, rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function)
         epsilon(i) = 10^-i;
 
         x = [epsilon(i); 1];
-        A = makeVandermondeMatrix(x, r);
+        A = makeVandermondeMatrix(x, r)
         [c_hat, L, U] = lu_function(A, y);
 
         c = A \ y;
