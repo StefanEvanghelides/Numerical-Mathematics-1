@@ -33,18 +33,26 @@ for i = 1:16
     % Solve regular normal equation
     c_normal = (A.'*A) \ (A.'*y);
     % Calculate relative error for normal equation
+<<<<<<< HEAD
     rel_err_normal(i) = sum(norm(c_normal - e)/norm(c_normal));
+=======
+>>>>>>> 25f5e2713d33f0465c833e55c8cd4b37c6017f84
     % Calculate upper bound for error
     upp_err_normal(i) = (cond(A.'*A)*(norm(y_perturbed)/norm(y)));
+    upp_err_normal(i) = (cond(A.'*A)*(norm(y_perturbed)/norm(y)))
     
     % Calculate QR factorization
     [Q, R] = qr(A,0);
     % Solve QR equation
     c_QR = R \ (Q.'*y);
     % Calculate relative error for QR factorization
+<<<<<<< HEAD
     rel_err_QR(i) = sum(norm(c_QR - e)/(norm(c_QR)));
+=======
+>>>>>>> 25f5e2713d33f0465c833e55c8cd4b37c6017f84
     % Calculate upper bound for error
     upp_err_QR(i) = (cond(R)*(norm(y_perturbed)/norm(y)));
+    upp_err_QR(i) = (cond(R)*(norm(y_perturbed)/norm(y)))
 
 end
 loglog(epsilon,rel_err_normal, '-s');

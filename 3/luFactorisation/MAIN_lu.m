@@ -3,7 +3,7 @@
 %    a function handle: either luNaive or luPivot
 
 % NOTE: this variable should be either @luNaive or @luPivot
-lu_function_handle = @luPivot;
+lu_function_handle = @luNaive;
 
 [epsilon, rel_err, K2_A, K2_L, K2_U, fact_err] = RUN_lu(lu_function_handle);
 
