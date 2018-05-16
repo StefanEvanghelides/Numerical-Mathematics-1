@@ -10,6 +10,7 @@
 % lambdaHist    approximate eigenvalue per iteration
 % convHist      error estimate per iteration
 function [lambda,x,flag,lambdaHist,convHist] = powerMethod(A,x0,tol,maxIt)
+    % Initialization
     flag = 1;   
     x0 = x0/norm(x0);
     product = A*x0;
