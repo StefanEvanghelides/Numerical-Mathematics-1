@@ -18,3 +18,17 @@
 % convHist  relative residual per iteration
 function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
     P, dynamic, alpha0)
+
+    for k = 0:maxIt
+        z = P \ r;
+        if dynamic
+            alpha_k = (z_k.' * r_k) / (z_k.' * A * z_k);
+        else
+            alpha_k = alpha0;
+        end
+        x_next = x_k + alpha_k * z_k;
+        r_next = r_k - alpha_k * A * z_k;
+    end
+
+    % Check terminating conditions
+end
