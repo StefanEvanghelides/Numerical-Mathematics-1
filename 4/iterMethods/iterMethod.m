@@ -19,16 +19,29 @@
 function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
     P, dynamic, alpha0)
 
-    for k = 0:maxIt
-        z = P \ r;
+    r0 = b - A * x0;
+    alpha_k = alpha0;
+    x = x0;
+    r_k = r0;
+    
+    for k = 1:maxIt
+        if ~isempty(P)
+            z_k = P \ r_k;
+        else
+            z_k = r_k;
+        end
+        
         if dynamic
             alpha_k = (z_k.' * r_k) / (z_k.' * A * z_k);
-        else
-            alpha_k = alpha0;
         end
-        x_next = x_k + alpha_k * z_k;
-        r_next = r_k - alpha_k * A * z_k;
+        x = x + alpha_k * z_k;
+        r_k = r_k - alpha_k * A * z_k;
+        
+        % Calculate the error using the residual
+        convHist(k) = norm(r_k)/norm(r0);
+        if convHist(k) <= tol
+            flag = 0;
+            break; 
+        end
     end
-
-    % Check terminating conditions
 end
