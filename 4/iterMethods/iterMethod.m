@@ -26,7 +26,7 @@ function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
     
     for k = 1:maxIt
         if ~isempty(P)
-            z_k = P \ r_k;
+            z_k = inv(P) *  r_k;
         else
             z_k = r_k;
         end
