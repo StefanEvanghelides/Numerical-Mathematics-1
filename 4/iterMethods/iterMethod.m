@@ -18,7 +18,7 @@
 % convHist  relative residual per iteration
 function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
     P, dynamic, alpha0)
-
+    
     r0 = b - A * x0;
     alpha_k = alpha0;
     x = x0;
