@@ -8,7 +8,7 @@ maxIt = 10^3;
 A = gallery('poisson', N);
 b = ones(N^2,1)/(N^2);
 
-x0 = rand(N^2, 1);
+x0 = zeros(N^2, 1);
 experiments = iterCompare(A,b,x0,tol,maxIt);
 
 
