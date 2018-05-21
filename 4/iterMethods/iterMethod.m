@@ -40,7 +40,7 @@ function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
         r_k = r_k - alpha_k * temp;
         
         % Calculate the error using the residual
-        convHist(k) = norm(r_k, 2)/norm(r0, 2);
+        convHist(k) = norm(r_k)/norm(r0);
         if convHist(k) <= tol
             flag = 0;
             break; 
