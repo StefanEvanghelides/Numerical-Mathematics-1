@@ -83,6 +83,7 @@ function alpha0 = optimalAlpha(A, P, pType)
 end
 
 function plotConvergence(experiments, plottingStyle)
+    figure('Name','Convergence','NumberTitle','off');
     myCmap = lines(numel(experiments));
     hold on
     myLegend = {};
