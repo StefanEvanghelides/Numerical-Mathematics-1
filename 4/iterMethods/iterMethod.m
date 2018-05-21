@@ -32,8 +32,11 @@ function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
         end
         
         temp = A * z_k; 
-        if dynamic
-            alpha_k = (z_k.' * r_k) / (z_k.' * temp);
+        switch dynamic
+            case 1
+                alpha_k = (z_k.' * r_k) / (z_k.' * temp);
+            case 2
+                alpha_k = (temp.' * r_k) / (temp.' * temp); 
         end
         
         x = x + alpha_k * z_k;

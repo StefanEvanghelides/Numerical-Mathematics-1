@@ -95,6 +95,7 @@ function plotConvergence(experiments, plottingStyle)
     hold off
     set(gca, 'YScale', 'log')
     ltx = {'Interpreter', 'LaTeX'};
+    title('Convergence');
     xlabel('Iteration $k$', ltx{:});
     ylabel('$\|r^{(k)}\|/\|b\|$', ltx{:});
     legend(myLegend, 'Location', 'NorthEast', ltx{:});
