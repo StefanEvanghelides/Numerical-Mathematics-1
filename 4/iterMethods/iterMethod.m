@@ -32,15 +32,18 @@ function [x, flag, convHist] = iterMethod(A, b, x0, tol, maxIt,...
         end
         
         temp = A * z_k; 
-        if dynamic
-            alpha_k = (z_k.' * r_k) / (z_k.' * temp);
+        switch dynamic
+            case 1
+                alpha_k = (z_k.' * r_k) / (z_k.' * temp);
+            case 2
+                alpha_k = (temp.' * r_k) / (temp.' * temp); 
         end
         
         x = x + alpha_k * z_k;
         r_k = r_k - alpha_k * temp;
         
         % Calculate the error using the residual
-        convHist(k) = norm(r_k, 2)/norm(r0, 2);
+        convHist(k) = norm(r_k)/norm(r0);
         if convHist(k) <= tol
             flag = 0;
             break; 
