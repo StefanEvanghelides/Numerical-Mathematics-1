@@ -4,6 +4,10 @@ tol = 10^-12;
 maxIt = 10^3;
 
 
+%test
+emptys = [];
+full(emptys)
+
 % Defining A and b in Ax = b
 A = gallery('poisson', N);
 b = ones(N^2,1)/(N^2);
