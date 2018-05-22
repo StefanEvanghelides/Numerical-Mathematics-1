@@ -13,8 +13,9 @@ alpha = 0.5;
 lambda_max = eigs(A,1);
 lambda_min = eigs(A,1,'SM');
 alpha_opt = 2 / (lambda_max + lambda_min);
+P_jacobi = eye(N^2);
 
-B = eye(N^2) - alpha * P\A;
+B = eye(N^2) - alpha_opt * P \ A;
 
 % Running the program
 [lambda, x, flag, lambdaHist, convHist] = powerMethod(B, x0, tol, maxIt);
@@ -45,9 +46,13 @@ xlabel('Iteration steps');
 ylabel('Lambda Value');
 legend([p3 p1], 'Location', 'best');
 
+rel_err(iterations) / rel_err(iterations-1)
+lambdas = eigs(B);
+(lambdas(2)/lambdas(1))^2
+
 % Figure 2
 figure('Name','Relative error','NumberTitle','off');
-loglog(1:iterations, rel_err, 'r', 'DisplayName', 'Relative error');
+semilogy(1:iterations, rel_err, 'r', 'DisplayName', 'Relative error');
 title('Relative error of the lambda approximation');
 xlabel('Iteration steps');
 ylabel('Error Value');
