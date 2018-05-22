@@ -11,16 +11,19 @@ x0 = zeros(N^2, 1);
 r0 = b - A*x0;
 
 % Calculate the Jacobi iteration matrix
-alpha_opt = 1/4;
+alpha_opt = 1;
 P_jacobi = spdiags(diag(A), 0, size(A, 1), size(A, 2));
 B = eye(N^2) - alpha_opt * (P_jacobi \ A); 
 
 
 spectralR = abs(eigs(B,1));
 k_min = 1;
+spectralRad = 1;
 
-while spectralR > tol && k_min < maxIt
+while spectralRad > tol && k_min < maxIt
     % Loop until we have reached tolerance
-    spectralR = spectralR*spectralR;
+    spectralRad = spectralR^k_min;
     k_min = k_min + 1;
 end
+
+k_min
