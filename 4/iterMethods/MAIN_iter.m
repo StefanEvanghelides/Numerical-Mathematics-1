@@ -17,5 +17,10 @@ x_reshape = reshape(x,N,N);
 surf(x_reshape, 'DisplayName', 'Solution');
 colormap(gray(50));
 title('Solution to Poisson');
-zlabel('Value');
-legend('Location', 'best');
+
+
+% REMAKR ON SPARSITY
+Q = gallery('poisson', 100);
+whos Q
+fullQ = full(Q);
+whos fullQ

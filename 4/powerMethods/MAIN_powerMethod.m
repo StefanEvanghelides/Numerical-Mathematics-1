@@ -21,6 +21,10 @@ B = eye(N^2) - alpha * P\A;
 rel_err = abs(lambda - lambdaHist) / abs(lambda);
 iterations = size(lambdaHist,2);
 
+% Showing lambda and first approximation
+lambda
+lambdaHist(1)
+
 %lambda = abs(lambda);
 %lambdaHist = abs(lambdaHist);
 
@@ -32,8 +36,6 @@ p1 = loglog(1:iterations, lambdaHist, 'b.-', 'DisplayName', '\lambda^{(K)}'); ho
 p3 = line([1 maxIt],[lambda lambda], 'Color', 'g', 'DisplayName', '\lambda_1');
 hold off;
 if lambda < 0
-    lambda
-    lambdaHist(1)
     ylim([lambda*1.3 lambdaHist(1)*0.90]);
 else
     ylim([lambdaHist(1)*0.8 lambda*1.3]);
