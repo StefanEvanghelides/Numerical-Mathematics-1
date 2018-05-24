@@ -1,6 +1,6 @@
 % INPUT
 % f         function of rootfinding problem
-% c         static parameter: xnew = x + c*f(x)
+% c         static parameter or function handle
 % x0        initial guess
 % tol       desired tolerance
 % maxIt     maximum number of iterations
@@ -14,7 +14,13 @@
 function [root, flag, convHist, rootHist] = aitkenIteration(f, c, x0, tol, maxIt, maxDepth)
     flag = 1; % We did not attain the desired tolerance
     rootHist(1) = x0;
-    phi = @(x) x + c*f(x);
+    
+    c_iter = c;
+    if isa(c, 'function_handle')
+        c_iter = c(x0);
+    end
+    
+    phi = @(x) x + c_iter * f(x);
     
     for i = 1:maxDepth+1
         for k = 2:maxIt
@@ -23,7 +29,11 @@ function [root, flag, convHist, rootHist] = aitkenIteration(f, c, x0, tol, maxIt
             gx = phi(x);
             ggx = phi(gx);
             xnew = (x*ggx - gx^2)/(ggx - 2*gx + x);
-
+            
+            if isa(c, 'function_handle')
+                c_iter = c(xnew); 
+            end
+            
             rootHist(k) = xnew;
             convHist(k) = abs(rootHist(k) - rootHist(k-1));
             root = rootHist(k);
