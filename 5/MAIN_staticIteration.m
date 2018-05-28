@@ -1,7 +1,7 @@
 % Script used to test and run the staticIteration.m function
 
 tol = 10^-12;
-maxIt = 125;
+maxIt = 25;
 maxDepth = 0;
 x0 = 0;
 
@@ -14,7 +14,7 @@ c_aitken = -1; % For aitkenIteration
 % Newton Iterations with depth 0..3
 c_funct = @(x) x+1; % Note, this should be a function handle
 for i = 1:4
-   [root(i), flag(i), convHist(i,:), rootHist(i,:)] = aitkenIteration(f, c_aitken, x0, tol, maxIt, i-i); 
+   [root(i), flag(i), convHist(i,:), rootHist(i,:)] = aitkenIteration(f, c_aitken, x0, tol, maxIt, i-1); 
    [root(i+4), flag(i+4), convHist(i+4,:), rootHist(i+4,:)] = aitkenIteration(f, c_funct, x0, tol, maxIt, i-1);
 end
 

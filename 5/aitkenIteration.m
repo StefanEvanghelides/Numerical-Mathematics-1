@@ -20,15 +20,12 @@ function [root, flag, convHist, rootHist] = aitkenIteration(f, c, x0, tol, maxIt
         c_iter = c(x0);
     end
     
-    phi = @(x) x + c_iter * f(x);
+    phi0 = @(x) x + c_iter * f(x);
     
     for k = 2:maxIt
         x = rootHist(k-1);
-
-        gx = phi(x);
-        ggx = phi(gx);
-        xnew = x - (gx - x)^2 / (ggx - 2*gx + x);
-        %(x*ggx - gx^2)/(ggx - 2*gx + x);
+        
+        xnew = phi(x,phi0,maxDepth+1);
 
         if isa(c, 'function_handle')
             c_iter = c(xnew); 
@@ -37,20 +34,11 @@ function [root, flag, convHist, rootHist] = aitkenIteration(f, c, x0, tol, maxIt
         rootHist(k) = xnew;
         convHist(k) = abs(rootHist(k) - rootHist(k-1));
         root = rootHist(k);
-        %if convHist(k) < tol
-        %    flag = 0;
-        %    break;
-        %end
-    end
-    
-        
-    if maxDepth == 0
         if convHist(k) < tol
             flag = 0;
+            convHist(k+1:end) = [];
+            break;
         end
-        return 
-    else
-        x0 = root;
-        [root, flag, convHist, rootHist] = aitkenIteration(f, c, x0, tol, maxIt, maxDepth-1);
     end
+    
 end
