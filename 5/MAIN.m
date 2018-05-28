@@ -6,13 +6,17 @@ maxDepth = 0;
 x0 = 0;
 
 f = @(x) cos(x) + 1.1*x;
+df = @(x) sin(x) + 1.1;
 c_static = -1 / 1.1; % c = -1 / f'(x0) for staticIteration
 c_aitken = -1; % For aitkenIteration
+
+convHist = zeros(8, maxIt);
+rootHist = zeros(8, maxIt);
 
 
 % Aitken static Iterations with depth 0..3 and
 % Newton Iterations with depth 0..3
-c_funct = @(x) x+1; % Note, this should be a function handle
+c_funct = @(x) -1/df(x); % Note, this should be a function handle
 for i = 1:4
    [root(i), flag(i), convHist(i,:), rootHist(i,:)] = aitkenIteration(f, c_aitken, x0, tol, maxIt, i-1); 
    [root(i+4), flag(i+4), convHist(i+4,:), rootHist(i+4,:)] = aitkenIteration(f, c_funct, x0, tol, maxIt, i-1);
@@ -35,8 +39,9 @@ end
 % For staticIteration, The spike is due to the fact that we set x0 = 0.
 figure('Name','Error Estimate','NumberTitle','off');
 for i = 1:4
-    p(i) = semilogy(1:iterations(i), convHist(i,:), 'DisplayName', ['Err Aitken', int2str(i)]); hold on
-    p(i+4) = semilogy(1:iterations(i+4), convHist(i+4,:), 'DisplayName', ['Err Newton', int2str(i)]);
+    colorStep = (i-1) * 0.33;
+    p(i) = semilogy(1:iterations(i), convHist(i,:), 'DisplayName', ['Err Aitken', int2str(i)], 'Color', [1, colorStep, 0]); hold on
+    p(i+4) = semilogy(1:iterations(i+4), convHist(i+4,:), 'DisplayName', ['Err Newton', int2str(i)], 'Color', [0, colorStep, 1-colorStep]);
 end
 hold off;
 title('Error Estimate');
