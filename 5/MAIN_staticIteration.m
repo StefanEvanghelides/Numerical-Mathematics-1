@@ -6,56 +6,54 @@ maxDepth = 0;
 x0 = 0;
 
 f = @(x) cos(x) + 1.1*x;
-c1 = -1 / 1.1; % c = -1 / f'(x0) for staticIteration
-c2 = -1; % For aitkenIteration
+c_static = -1 / 1.1; % c = -1 / f'(x0) for staticIteration
+c_aitken = -1; % For aitkenIteration
 
-% For testing purposes we will compare staticIteration and aitkenIteration
-% with depth = 0
-[root_test_s, flag_test_s, convHist_test_s, rootHist_test_s] = ...
-    staticIteration(f, c1, x0, tol, maxIt);
-[root_test_a, flag_test_a, convHist_test_a, rootHist_test_a] = ...
-    aitkenIteration(f, c2, x0, tol, maxIt, 0);
 
-% Aitken static Iterations 0..3
-[root1, flag1, convHist1, rootHist1] = aitkenIteration(f, c1, x0, tol, maxIt, 0);
-[root2, flag2, convHist2, rootHist2] = aitkenIteration(f, c2, x0, tol, maxIt, 1);
-[root3, flag3, convHist3, rootHist3] = aitkenIteration(f, c2, x0, tol, maxIt, 2);
-[root4, flag4, convHist4, rootHist4] = aitkenIteration(f, c2, x0, tol, maxIt, 3);
-
-% Newton Iterations 0..3
+% Aitken static Iterations with depth 0..3 and
+% Newton Iterations with depth 0..3
 c_funct = @(x) x+1; % Note, this should be a function handle
-[root5, flag5, convHist5, rootHist5] = aitkenIteration(f, c_funct, x0, tol, maxIt, 0);
-[root6, flag6, convHist6, rootHist6] = aitkenIteration(f, c_funct, x0, tol, maxIt, 1);
-[root7, flag7, convHist7, rootHist7] = aitkenIteration(f, c_funct, x0, tol, maxIt, 2);
-[root8, flag8, convHist8, rootHist8] = aitkenIteration(f, c_funct, x0, tol, maxIt, 3);
+for i = 1:4
+   [root(i), flag(i), convHist(i,:), rootHist(i,:)] = aitkenIteration(f, c_aitken, x0, tol, maxIt, i-i); 
+   [root(i+4), flag(i+4), convHist(i+4,:), rootHist(i+4,:)] = aitkenIteration(f, c_funct, x0, tol, maxIt, i-1);
+end
+
+% Getting the number of iterations
+for i = 1:8
+    [~, iterations(i)] = size(convHist(i,:));
+end
+
+% Getting the relative error
+alpha = -0.69704098638574585;
+for i = 1:2
+    error(i,:) = abs(rootHist(i,:) - alpha);
+    rel_err(i,:) = abs(error(i,:) - convHist(i,:)) ./ error(i,:);
+end
 
 
-[~, iterations1] = size(convHist1);
-[~, iterations2] = size(convHist2);
-[~, iterations3] = size(convHist3);
-[~, iterations4] = size(convHist4);
-[~, iterations5] = size(convHist5);
-[~, iterations6] = size(convHist6);
-[~, iterations7] = size(convHist7);
-[~, iterations8] = size(convHist8);
-
-
-%%%%% Plotting the relative errors %%%%%%%%%%%%
+%%%%% Plotting the error estimates %%%%%%%%%%%%
 % For staticIteration, The spike is due to the fact that we set x0 = 0.
-figure('Name','Relative error','NumberTitle','off');
-plot(1:iterations1, convHist1, 'DisplayName', 'Rel err1'); hold on
-plot(1:iterations2, convHist2, 'DisplayName', 'Rel err2');
-plot(1:iterations3, convHist3, 'DisplayName', 'Rel err3');
-plot(1:iterations4, convHist4, 'DisplayName', 'Rel err4');
-plot(1:iterations5, convHist5, 'DisplayName', 'Rel err5');
-plot(1:iterations6, convHist6, 'DisplayName', 'Rel err6');
-plot(1:iterations7, convHist7, 'DisplayName', 'Rel err7');
-plot(1:iterations8, convHist8, 'DisplayName', 'Rel err8');
+figure('Name','Error Estimate','NumberTitle','off');
+for i = 1:4
+    p(i) = semilogy(1:iterations(i), convHist(i,:), 'DisplayName', ['Err Aitken', int2str(i)]); hold on
+    p(i+4) = semilogy(1:iterations(i+4), convHist(i+4,:), 'DisplayName', ['Err Newton', int2str(i)]);
+end
 hold off;
-title('Relative error');
+title('Error Estimate');
 xlabel('Iteration steps');
-ylabel('Error Value');
+ylabel('Estimated error');
+legend(p(1:8), 'Location', 'best');
+
+%%%%% Plotting the relative error %%%%%%%%%%%%
+figure('Name','Relative error','NumberTitle','off');
+semilogy(1:iterations(1), rel_err(1,:), 'DisplayName', 'Err1'); hold on
+semilogy(1:iterations(2), rel_err(2,:), 'DisplayName', 'Err2');
+hold off;
+title('Relative Error');
+xlabel('Iteration steps');
+ylabel('Rel Err');
 legend('Location', 'best');
+
 
 %%%%%% Plotting the function f %%%%%%%
 figure('Name','Function f','NumberTitle','off');
