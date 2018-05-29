@@ -13,6 +13,8 @@ c_aitken = -1; % For aitkenIteration
 convHist = zeros(8, maxIt);
 rootHist = zeros(8, maxIt);
 
+[root_s, flag_s, convHist_s, rootHist_s] = staticIteration(f, c_static, x0, tol, maxIt); 
+[~, iterations_s] = size(convHist_s);
 
 % Aitken static Iterations with depth 0..3 and
 % Newton Iterations with depth 0..3
@@ -40,9 +42,10 @@ end
 figure('Name','Error Estimate','NumberTitle','off');
 for i = 1:4
     colorStep = (i-1) * 0.33;
-    p(i) = semilogy(1:iterations(i), convHist(i,:), 'DisplayName', ['Err Aitken', int2str(i)], 'Color', [1, colorStep, 0]); hold on
-    p(i+4) = semilogy(1:iterations(i+4), convHist(i+4,:), 'DisplayName', ['Err Newton', int2str(i)], 'Color', [0, colorStep, 1-colorStep]);
+    p(i) = semilogy(1:iterations(i), convHist(i,:), 'DisplayName', ['Static \phi_{\Delta}^{(', int2str(i-1),')}'], 'Color', [1, colorStep, 0]); hold on
+    p(i+4) = semilogy(1:iterations(i+4), convHist(i+4,:), 'DisplayName', ['Newton \phi_{\Delta}^{(', int2str(i-1),')}'], 'Color', [0, colorStep, 1-colorStep]);
 end
+%p(9) = semilogy(1:iterations_s, convHist_s, 'DisplayName', 'StaticIter', 'Color', 'k');
 hold off;
 title('Error Estimate');
 xlabel('Iteration steps');
@@ -51,8 +54,8 @@ legend(p(1:8), 'Location', 'best');
 
 %%%%% Plotting the relative error %%%%%%%%%%%%
 figure('Name','Relative error','NumberTitle','off');
-semilogy(1:iterations(1), rel_err(1,:), 'DisplayName', 'Err1'); hold on
-semilogy(1:iterations(2), rel_err(2,:), 'DisplayName', 'Err2');
+semilogy(1:iterations(1), rel_err(1,:), 'DisplayName', 'Error \phi_{\Delta}^{(0)}'); hold on
+semilogy(1:iterations(2), rel_err(2,:), 'DisplayName', 'Error \phi_{\Delta}^{(1)}');
 hold off;
 title('Relative Error');
 xlabel('Iteration steps');
