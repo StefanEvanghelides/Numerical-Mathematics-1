@@ -6,7 +6,7 @@ maxDepth = 0;
 x0 = 0;
 
 f = @(x) cos(x) + 1.1*x;
-df = @(x) sin(x) + 1.1;
+df = @(x) -sin(x) + 1.1;
 c_static = -1 / 1.1; % c = -1 / f'(x0) for staticIteration
 c_aitken = -1; % For aitkenIteration
 
@@ -33,7 +33,7 @@ end
 alpha = -0.69704098638574585;
 for i = 1:2
     error(i,:) = abs(rootHist(i,:) - alpha);
-    rel_err(i,:) = abs(error(i,:) - convHist(i,:)) ./ error(i,:);
+    rel_err(i,:) = abs(error(i,1:end-1) - convHist(i,2:end)) ./ error(i,1:end-1);
 end
 
 
@@ -54,8 +54,8 @@ legend(p(1:8), 'Location', 'best');
 
 %%%%% Plotting the relative error %%%%%%%%%%%%
 figure('Name','Relative error','NumberTitle','off');
-semilogy(1:iterations(1), rel_err(1,:), 'DisplayName', 'Error \phi_{\Delta}^{(0)}'); hold on
-semilogy(1:iterations(2), rel_err(2,:), 'DisplayName', 'Error \phi_{\Delta}^{(1)}');
+semilogy(1:iterations(1)-1, rel_err(1,:), 'DisplayName', 'Error \phi_{\Delta}^{(0)}'); hold on
+semilogy(1:iterations(2)-1, rel_err(2,:), 'DisplayName', 'Error \phi_{\Delta}^{(1)}');
 hold off;
 title('Relative Error');
 xlabel('Iteration steps');
