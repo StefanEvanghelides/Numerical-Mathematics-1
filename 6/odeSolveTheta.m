@@ -13,5 +13,22 @@
 % tArray    array containing the time points
 % solArray  array containing the solution at each time level
 %           (the ith row equals the solution at time tArray(i))
-function [tArray, solArray] = odeSolveTheta(f, tRange, u0, df,...
-    theta, h)
+function [tArray, solArray] = odeSolveTheta(f, tRange, u0, df, theta, h)
+    % Initialize and perform first step
+    t0 = tRange(1);
+    T = tRange(2);
+    f_val = f(t0, u0);
+    idx = 1;
+    tArray(idx) = t0;
+    solArray(idx) = u0;
+    
+    for t = (t0+h):h:T        
+        u = solArray(idx);
+        idx = idx + 1;
+        tArray(idx) = t;
+        u = u + h*(theta*f_val + (1-theta)*f_val);
+        f_val = f(t, solArray(idx-1));
+        
+        solArray(idx) = u;
+    end
+end
