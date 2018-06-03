@@ -4,7 +4,6 @@
 % x0        is the initial guess
 % tol       is the desired tolerance
 % maxIt     maximum number of iterations
-% OUTPUT
 % root      if succesful, root is an approximation to the
 %           root of the nonlinear equation
 % flag      flag = 0: tolerance attained, flag = 1: reached maxIt
