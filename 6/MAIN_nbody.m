@@ -5,7 +5,7 @@
 t0 = 0;
 P = 1; %Orbital period
 T = 5*P;
-f = @(u,x);
+f = @(t,u) twoBodyF(t, solVec);
 tRange = [t0 T];
 B = 2;
 theta = 1/2;
@@ -41,7 +41,21 @@ end
 
 %%                 Solar system
 
+%tArray = ;
+%solArray = ;
+%bodyData = ;
 
+%t = ;
+%solVec = ;
+%N = ;
+%mass = ;
+
+%du = nBody(t, solVec, N, mass);
+
+solVec = [1 2 3 4 5 6; 1 2 3 4 5 6; 1 2 3 4 5 6];
+
+solArray = reshape(solVec, [N*no 1]);
+simulateSolarSystem(tArray, solArray, bodyData);
 
 
 
