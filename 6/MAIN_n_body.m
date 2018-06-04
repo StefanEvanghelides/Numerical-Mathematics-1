@@ -5,7 +5,6 @@
 t0 = 0;
 P = 1; %Orbital period
 T = 5*P;
-f = @(u,x);
 tRange = [t0 T];
 B = 2;
 theta = 1/2;
@@ -13,6 +12,7 @@ R = 1;
 omega = sqrt(4*pi^2 / (R^3));
 x_exact = @(t) R*[cos(omega*t); sin(omega*t); 0];
 u_exact = @(t) - (4*pi^2)/(norm(x_exact(t),2)^3) * x_exact(t);
+f = @(t,u) twoBodyF(t, [u x_exact(t)]);
 x0 = x_exact(0);
 u0 = u_exact(0);
 
