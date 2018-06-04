@@ -81,14 +81,15 @@ timer_Theta_FE
 timer_Theta_CN
 timer_Theta_BE
 
-loglog(h, error_Theta_FE, 'DisplayName', ['\theta(',int2str(i),') = 0']); hold on
-loglog(h, error_Theta_CN, 'DisplayName', ['\theta(',int2str(i),') = 1/2']);
-loglog(h, error_Theta_BE, 'DisplayName', ['\theta(',int2str(i),') = 1']);
+loglog(h, error_Theta_FE, 'o-', 'DisplayName', '\theta = 0'); hold on
+loglog(h, error_Theta_CN, 'o-', 'DisplayName', '\theta = 1/2');
+loglog(h, error_Theta_BE, 'o-', 'DisplayName', '\theta = 1');
 hold off;
 xlabel('step h');
-ylabel('Error at T=10');
-title('\theta Method Stability Test');
+ylabel('Error Value');
+title('\theta Method Stability Test (T=10)');
 legend('Location', 'best');
+set(gca, 'XDir','reverse')
 
 
 
@@ -114,12 +115,12 @@ for i=1:7
     [tArray11, solArray11] = odeSolveTheta(f, tRange, u0, df, 0, h);
    
     x = t0:h:T;
-    p(i) = plot(x, solArray11, 'DisplayName', ['\theta(',int2str(i),') = 0']); hold on
+    p(i) = plot(x, solArray11, 'DisplayName', ['h=',num2str(h)]); hold on
 end
 hold off;
 xlabel('interval');
 ylabel('Solution Arrays');
-title('\theta Method Stability Test');
+title('\theta = 0');
 legend(p, 'Location', 'best');
 
 % Theta = 1/2
@@ -129,12 +130,12 @@ for i=1:7
     [tArray12, solArray12] = odeSolveTheta(f, tRange, u0, df, 1/2, h);
    
     x = t0:h:T;
-    p(i) = plot(x, solArray12, 'DisplayName', ['\theta(',int2str(i),') = 1/2']); hold on
+    p(i) = plot(x, solArray12, 'DisplayName', ['h=',num2str(h)]); hold on
 end
 hold off;
 xlabel('interval');
 ylabel('Solution Arrays');
-title('\theta Method Stability Test');
+title('\theta = 1/2');
 legend(p, 'Location', 'best');
 
 % Theta = 1
@@ -144,10 +145,41 @@ for i=1:7
     [tArray13, solArray13] = odeSolveTheta(f, tRange, u0, df, 1, h);
    
     x = t0:h:T;
-    p(i) = plot(x, solArray13, 'DisplayName', ['\theta(',int2str(i),') = 1']); hold on
+    p(i) = plot(x, solArray13, 'DisplayName', ['h=',num2str(h)]); hold on
 end
 hold off;
 xlabel('interval');
 ylabel('Solution Arrays');
-title('\theta Method Stability Test');
+title('\theta = 1');
 legend(p, 'Location', 'best');
+
+
+%%           RE: Part 1, plotting separate figures by h  
+t0 = 0;
+T = 10;
+tRange = [t0 T];
+lambda = -100;
+y = @(t) exp(lambda*t) + sin(t);
+f = @(t,u) lambda*(u - sin(t)) + cos(t);
+u0 = y(0);
+df = @(t) -sin(t) - lambda*cos(t);
+
+for i=1:7
+    h = 2*10^-2 + (i-4)*10^-4;
+    [tArray11, solArray11] = odeSolveTheta(f, tRange, u0, df, 0, h);
+    [tArray12, solArray12] = odeSolveTheta(f, tRange, u0, df, 1/2, h);
+    [tArray13, solArray13] = odeSolveTheta(f, tRange, u0, df, 1, h);
+   
+    figure('Name', ['h = ', num2str(h)], 'NumberTitle', 'off');
+    x = t0:h:T;
+    plot(x, solArray11, 'DisplayName', '\theta = 0'); hold on
+    plot(x, solArray12, 'DisplayName', '\theta = 1/2');
+    plot(x, solArray13, 'DisplayName', '\theta = 1');
+    hold off;
+    xlabel('interval');
+    ylabel('Solution Arrays');
+    title(['h = ', num2str(h)]);
+    legend('Location', 'best');
+end
+
+
