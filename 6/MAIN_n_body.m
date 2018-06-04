@@ -41,6 +41,26 @@ end
 
 %%                 Solar system
 
+%tArray = ;
+%solArray = ;
+%bodyData = ;
+
+%t = ;
+%solVec = ;
+%N = ;
+%mass = ;
+
+%du = nBody(t, solVec, N, mass);
+
+solVec = [1 2 3 4 5 6; 1 2 3 4 5 6; 1 2 3 4 5 6];
+
+load('solarSimData.mat')
+bodyData
+bodyMass
+velAndPos
+
+solArray = reshape(solVec, [N*no 1]);
+simulateSolarSystem(tArray, solArray, bodyData);
 
 
 
