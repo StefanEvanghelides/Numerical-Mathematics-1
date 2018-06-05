@@ -21,18 +21,24 @@ for i = 3:12
   
     h(i) = (2^-i) * P; 
    
-    [tArray, solArray] = odeSolveRK(f, tRange, u0, B, h(i));
+    [tArrayRK, solArrayRK] = odeSolveRK(f, tRange, u0, B, h(i));
+    xRK = solArrayRK(:,1);
+    yRK = solArrayRK(:,2);
+    pRK(i) = plot(xRK, yRK, 'DisplayName', ['RK: h = ', num2str(h(i))]); hold on
     
-    x = solArray(:,1);
-    y = solArray(:,2);
-    
-    pRK(i) = plot(x, y, 'DisplayName', ['RK: h = ', num2str(h(i))]); hold on
+    solVec = [u0 x0];
+    t = 0;
+    df = twoBodyJac(t, solVec); 
+    [tArrayT, solArrayT] = odeSolveTheta(f, tRange, u0, df, 1/2, h(i));
+    xT = solArrayT(:,1);
+    yT = solArrayT(:,2);
+    pRK(i) = plot(xT, yT, 'DisplayName', ['\theta: h = ', num2str(h(i))]); hold on
    
 end
 hold off;
 xlabel('x-coordinate');
 ylabel('y-coordinate');
-title('Two-Bodies Method Test');
+title('RK(B=2,R=1) vs \theta=1/2 method');
 legend('Location', 'best');
 
 
@@ -59,18 +65,27 @@ u0 = u_exact(0);
 
 h = (2^-10) * P;
 
-df = []; % Broyden's method
-[tArray1, solArray1] = odeSolveTheta2(f, tRange, u0, df, theta, h);
+% Broyden's method
+%df = []; 
+%[tArrayB, solArrayB] = odeSolveTheta(f, tRange, u0, df, theta, h);
 
-%solVec = [u0 x0];
-%t = 0;
-%df = twoBodyF(t, solVec); % Newton's method
-%[tArray2, solArray2] = odeSolveTheta2(f, tRange, u0, df, theta, h);
+%figure('Name','Two-Bodies Method Test','NumberTitle','off');
+%xB = solArrayB(:,1);
+%yB = solArrayB(:,2);
+%plot(xB, yB, 'DisplayName', ['Broyden: h = ', num2str(h)]); hold on
 
-x = solArray1(:,1);
-y = solArray1(:,2);
-plot(x, y, 'DisplayName', ['\theta: h = ', num2str(h)]); hold on
+% Newton's method
+solVec = [u0 x0];
+t = 0;
+df = twoBodyJac(t, solVec); 
+[tArrayN, solArrayN] = odeSolveTheta(f, tRange, u0, df, theta, h);
 
+
+% Plotting
+
+xN = solArrayN(:,1);
+yN = solArrayN(:,2);
+plot(xN, yN, 'DisplayName', ['Newton: h = ', num2str(h)]);
 hold off;
 xlabel('x-coordinate');
 ylabel('y-coordinate');
@@ -88,22 +103,13 @@ velAndPos
 
 [sz, N] = size(velAndPos);
 
+tArray = 0:(1/8760):1;
 
-%tArray = ;
-%solArray = ;
-%bodyData = ;
+solVec = reshape(velAndPos, [N*sz 1]);
 
-%t = ;
-%solVec = ;
-%N = ;
-%mass = ;
+du = nBodyF(t, solVec, N, bodyMass);
 
-%du = nBody(t, solVec, N, mass);
-
-solVec = velAndPos;
-
-solArray = reshape(solVec, [N*sz 1]);
-simulateSolarSystem(tArray, solArray, bodyData);
+simulateSolarSystem(tArray, du', bodyData);
 
 
 
