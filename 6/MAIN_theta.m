@@ -12,7 +12,7 @@ lambda = -100;
 y = @(t) exp(lambda*t) + sin(t);
 f = @(t,u) lambda*(u - sin(t)) + cos(t);
 u0 = y(0);
-df = @(t) -sin(t) - lambda*cos(t);
+df = @(t) lambda;
 
 figure('Name','Theta Method Stability Test','NumberTitle','off');
 for i=1:7
@@ -47,7 +47,7 @@ lambda = -1;
 y = @(t) exp(lambda*t) + sin(t);
 f = @(t,u) lambda*(u - sin(t)) + cos(t);
 u0 = y(0);
-df = @(t) -sin(t) - lambda*cos(t);
+df = @(t) lambda;
 
 figure('Name','Order of Accuracy Test','NumberTitle','off');
 for i = 0:7
@@ -106,7 +106,7 @@ lambda = -100;
 y = @(t) exp(lambda*t) + sin(t);
 f = @(t,u) lambda*(u - sin(t)) + cos(t);
 u0 = y(0);
-df = @(t) -sin(t) - lambda*cos(t);
+df = @(t) lambda;
 
 % Theta = 0
 figure('Name','Theta = 0','NumberTitle','off');
