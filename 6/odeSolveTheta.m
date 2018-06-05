@@ -13,7 +13,7 @@
 % tArray    array containing the time points
 % solArray  array containing the solution at each time level
 %           (the ith row equals the solution at time tArray(i))
-function [tArray, solArray] = odeSolveTheta2(f, tRange, u0, df, theta, h)
+function [tArray, solArray] = odeSolveTheta(f, tRange, u0, df, theta, h)
     % Metadata
     tol = 10^-9;
     maxIt = 50;
@@ -24,10 +24,10 @@ function [tArray, solArray] = odeSolveTheta2(f, tRange, u0, df, theta, h)
     T = tRange(2);
     idx = 1;
     tArray(idx) = t0;
-    solArray(idx,:) = u0;
+    solArray(:,idx) = u0;
     
     for t = (t0+h):h:T        
-        u = solArray(idx,:);
+        u = solArray(:,idx);
         idx = idx + 1;
         tArray(idx) = t; 
 
@@ -37,9 +37,10 @@ function [tArray, solArray] = odeSolveTheta2(f, tRange, u0, df, theta, h)
             [root, ~, ~] = broyden(F, u, tol, maxIt);
         else
             J = @(t) eye(N) - theta*h*df(t);
+            J(zeros(6,1))
             [root, ~, ~] = newton(F,J, u, tol, maxIt);
         end
         
-        solArray(idx,:) = root;     
+        solArray(:,idx) = root;     
     end
 end

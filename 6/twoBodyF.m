@@ -10,5 +10,5 @@ function dSolVec = twoBodyF(t, solVec)
     f1 = - (4*pi^2)/(norm(x,2)^3) * x;
     f2 = u;
     
-    dSolVec = f1;
+    dSolVec = [f1; f2];
 end
