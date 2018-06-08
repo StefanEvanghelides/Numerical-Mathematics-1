@@ -44,7 +44,7 @@ function [sol, nodes] = poissonSolveFD(f, g, N, precon, tol)
             P = [];
     end
     
-    [u, ~, ~] = iterMethod(A,b,x0,tol,maxIt,P,dynamic,alpha);
+    [u, ~, ~] = iterMethod(A,b,x0,tol,maxIt,P,dynamic,alpha_opt);
      
     sol = [g(1); u; g(2)];
 end
