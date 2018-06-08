@@ -20,8 +20,8 @@ function [sol, nodes] = poissonSolveFD(f, g, N, precon, tol)
     nodes(1) = 0;
     nodes(N+2) = 1;
     for i = 1:N
-        b(i) = h^2 * f(i);
         nodes(i+1) = i*h;
+        b(i) = h^2 * f(nodes(i+1));
     end
     
     dynamic = 2;
@@ -44,7 +44,7 @@ function [sol, nodes] = poissonSolveFD(f, g, N, precon, tol)
             P = [];
     end
     
-    [u, ~, ~] = iterMethod2(A,b,x0,tol,maxIt,P,dynamic,alpha);
+    [u, ~, ~] = iterMethod(A,b,x0,tol,maxIt,P,dynamic,alpha);
      
     sol = [g(1); u; g(2)];
 end
