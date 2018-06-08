@@ -11,18 +11,18 @@ max_error = zeros(iter_end - iter_start + 1, 1);
 
 for i = iter_start : iter_end
     h(i-1) = 2^-i;
-    N = 1/h(i-1) - 1
+    N = 1/h(i-1) - 1;
 
     [sol, nodes] = poissonSolveFD(f, g, N, precon, tol);
     
     error = abs(u_tilde(nodes) - sol);    
     max_error(i-1) = max(error);
    
-   % if i==10
-   %     h(i:end) = [];
-   %     max_error(i:end) = [];
-   %     break
-   % end
+%    if i==10
+%        h(i:end) = [];
+%        max_error(i:end) = [];
+%        break
+%    end
    
 end
 
