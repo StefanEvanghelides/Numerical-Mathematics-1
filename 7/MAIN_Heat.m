@@ -1,15 +1,23 @@
 % Initialization
-g = [0 0];
+u_tilde = @(x) sin(pi*x);
+f = @(x) pi^2 * u_tilde(x);
+
 mu = 10^-3;
-p = @(x,t) pi^2*mu*sin(pi*x);
+gamma = pi^2 * mu;
+p = @(x,t) gamma * sin(pi*x);
+v_tilde = @(x,t) (1 + e^(-gamma * t)) * u_tilde(x);
 T = 1000;
 h1 = 1/20;
 h2 = 1/40;
-u0Func = @(t) 0;
-theta = 1/2;
+u0Func = @(t) 0; % this is g = [0 0]
 tEnd = 10;
-dt = 1/T;
-N = 998;
 
-heatSolveTheta(p, u0Func , mu, theta, tEnd, N, dt)
+
+% For h1 = 1/2, theta = 0, dt = 0.15625
+dt = 0.15625; 
+N = T / dt;
+theta = 0;
+tEnd = T;
+
+[tArray, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta, tEnd, N, dt);
 
