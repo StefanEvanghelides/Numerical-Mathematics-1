@@ -7,7 +7,6 @@ gamma = pi^2 * mu;
 p = @(x,t) gamma * sin(pi*x);
 v_tilde = @(x,t) (1 + exp(-gamma * t)) * u_tilde(x);
 T = 1000;
-u0Func = @(t) zeros(N+1,1); % this is g = [0 0]
 h1 = 1/20;
 h2 = 1/40;
  
@@ -21,12 +20,14 @@ epsilon_h2 = zeros(7,1);
 % Theta = 0, dt = 0.15625
 %   For h = 1/20
 dt(1) = 0.15625;
+u0Func = @(t) zeros(T/dt(1)+1,1); % this is g = [0 0]
 theta(1) = 0;
 tEnd = T;
 N = 1/h1 - 1;
 
 
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(1), tEnd, N, dt(1));
+nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,tEnd)');
 max_error1 = max(error);
 

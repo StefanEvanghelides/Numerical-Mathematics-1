@@ -30,6 +30,6 @@ function [tArray, solArray, nodes] = heatSolveTheta(p,...
     
     [tArray,solArray] = odeSolveTheta(f, tRange, nodes, df, theta, dt); 
     
-    %solArray = [u0Func(0) solArray u0Func(tEnd)];
+    solArray = [u0Func(0) solArray u0Func(tEnd)];
 
 end 
