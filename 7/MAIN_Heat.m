@@ -1,4 +1,6 @@
- % Initialization
+
+%%               Test Problem
+
 u_tilde = @(x) sin(pi*x);
 f = @(x) pi^2 * u_tilde(x);
 
@@ -84,4 +86,25 @@ surf(solArray);
 figure('Name', 'Temperature plot', 'NumberTitle', 'off');
 colormap('default')
 imagesc(solArray)
-colorbar 
+colorbar
+
+
+
+%%                Application Problem
+
+u_tilde = @(x) sin(pi*x);
+f = @(x) pi^2 * u_tilde(x);
+
+mu = 80.4 / (450 * 7874);
+P_star = 2 * 10^7 / (450 * 7874);
+gamma = pi^2 * mu;
+p = @p_funct;
+v_tilde = @(x,t) (1 + exp(-gamma * t)) * u_tilde(x);
+T = 600;
+h = 10^-3;
+
+dt = 1;
+u0Func = @(t) 293 * ones(T/dt(1)+1,1); % this is g = [0 0]
+theta(1) = 0;
+tEnd = T;
+N = 1/h1 - 1;
