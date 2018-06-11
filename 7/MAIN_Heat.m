@@ -30,12 +30,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -52,12 +54,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -74,12 +78,15 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+PLOT_temperature(solArray, theta(idx), dt(idx), N);
+
 
 
 
@@ -96,12 +103,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -119,12 +128,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -142,12 +153,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -165,12 +178,14 @@ N = 1/h1 - 1;
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h1(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 N = 1/h2 - 1;
 [~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta(idx), T, N, dt(idx));
 nodes = [0; nodes; 1];
 error = abs(solArray(end,:) - v_tilde(nodes,T)');
 epsilon_h2(idx) = max(error);
+%PLOT_temperature(solArray, theta(idx), dt(idx), N);
 
 
 
@@ -179,11 +194,8 @@ epsilon_h2(idx) = max(error);
 array2table ([theta, dt, theta_mod, epsilon_h1, epsilon_h2,], ...
     'VariableNames', {'theta', 'dt', 'theta_mod', 'epsilon_h1_T', 'epsilon_h2_T'})
 
-% Plot the temperature
-figure('Name', 'Temperature plot', 'NumberTitle', 'off');
-colormap('default')
-imagesc(solArray)
-colorbar
+
+
 
 
 
