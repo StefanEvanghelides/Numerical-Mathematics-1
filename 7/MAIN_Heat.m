@@ -77,11 +77,6 @@ theta(7) = 1;
 array2table ([theta, dt, theta_mod, epsilon_h1, epsilon_h2,], ...
     'VariableNames', {'theta', 'dt', 'var', 'epsilon_h1_T', 'epsilon_h2_T'})
 
-
-% Plot the surface of the results
-figure('Name', 'Surface of the temperature', 'NumberTitle', 'off');
-surf(solArray);
-
 % Plot the temperature
 figure('Name', 'Temperature plot', 'NumberTitle', 'off');
 colormap('default')

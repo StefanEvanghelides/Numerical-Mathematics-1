@@ -23,10 +23,9 @@ function [tArray, solArray, nodes] = heatSolveTheta(p,...
     nodes = (h:h:(1-h))';
     u0 = zeros(size(nodes));
     tRange = [0 tEnd];
-    D = makeLaplace(N);
-    A = D;
-    df = @(t) - (mu / h^2) * A;   
-    f = @(t, vt) - (mu / h^2) * A * vt + p(vt,t);
+    A = makeLaplace(N);
+    df = @(t) - (mu/h^2) * A;   
+    f = @(t, vt) - (mu/h^2) * A * vt + p(t,t);
     
     [tArray,solArray] = odeSolveTheta(f, tRange, nodes, df, theta, dt); 
     
