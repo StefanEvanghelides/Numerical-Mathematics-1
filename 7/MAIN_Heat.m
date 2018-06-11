@@ -76,7 +76,16 @@ N = T / dt(7);
 theta(7) = 1;
 
 
-
 % Table
 array2table ([theta, dt, theta_mod, epsilon_h1, epsilon_h2,], ...
     'VariableNames', {'theta', 'dt', 'var', 'epsilon_h1_T', 'epsilon_h2_T'})
+
+
+
+% Plot the temperature
+x = 1:10;
+y = 1:10;
+A = x'*y;
+colormap('default')
+imagesc(A)
+colorbar
