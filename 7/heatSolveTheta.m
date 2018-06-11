@@ -20,31 +20,16 @@ function [tArray, solArray, nodes] = heatSolveTheta(p,...
     u0Func , mu, theta, tEnd, N, dt)
 
     h = 1/(N+1);
-    nodes = 0:h:1;
-    u0 = u0Func(0);
+    nodes = (h:h:(1-h))';
+    u0 = zeros(size(nodes));
     tRange = [0 tEnd];
+    D = makeLaplace(N);
+    A = D;
+    df = @(t) - (mu / h^2) * A;   
+    f = @(t, vt) - (mu / h^2) * A * vt + p(vt,t);
     
-    for i = 1:N
-        x = nodes(i);
-        p(x);
-        [solArray,tArray] = odeSolveTheta(p, tRange, u0, df, theta, dt); 
-    end
-
-% Performs integration of the system of ODEs given by
-%           d/dt u = f(t, u(t)), u(tRange(1)) = u0
-% using the theta-method
-% INPUT
-% f         the right-hand side function, the output should be a
-%           N x 1 array where N is the number of unknowns
-% tRange    the time interval of integration
-% u0        initial solution at t = tRange(1) (N x 1 array)
-% df        a function that evaluates the jacobian of f
-% theta     defines the method
-% h         the step-size
-% OUTPUT
-% tArray    array containing the time points
-% solArray  array containing the solution at each time level
-%           (the ith row equals the solution at time tArray(i))
-%[tArray, solArray] = odeSolveTheta(f, tRange, u0, df, theta, h)
+    [tArray,solArray] = odeSolveTheta(f, tRange, nodes, df, theta, dt); 
+    
+    %solArray = [u0Func(0) solArray u0Func(tEnd)];
 
 end 
