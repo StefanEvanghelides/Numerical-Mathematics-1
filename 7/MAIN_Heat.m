@@ -205,15 +205,31 @@ u_tilde = @(x) sin(pi*x);
 f = @(x) pi^2 * u_tilde(x);
 
 mu = 80.4 / (450 * 7874);
-P_star = 2 * 10^7 / (450 * 7874);
 gamma = pi^2 * mu;
-p = @p_funct;
+p = @p_func;
 v_tilde = @(x,t) (1 + exp(-gamma * t)) * u_tilde(x);
-T = 600;
+T = 100;
+T_star = 1811;
 h = 10^-3;
 
-dt = 1;
-u0Func = @(t) 293 * ones(T/dt(1)+1,1); % this is g = [0 0]
-theta(1) = 0;
-tEnd = T;
-N = 1/h1 - 1;
+dt = 0.02;
+u0Func = @(t) 293 * ones(T/dt+1,1); % this is g = [0 0]
+N = 1/h - 1;
+theta = 0;
+
+[~, solArray, nodes] = heatSolveTheta(p, u0Func , mu, theta, T, N, dt);
+PLOT_temperature(solArray, theta, dt, N);
+[len, ~] = size(solArray);
+time_needed = len;
+for i = 1:len
+   if max(solArray(i,:)) > T_star
+       time_needed = i;
+       break;
+   end
+end
+
+if time_needed == len
+    disp('Melting point not reached in time');
+else
+    disp(['Melting point reached after: ', num2str(time_needed)]);
+end
