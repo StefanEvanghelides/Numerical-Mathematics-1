@@ -20,8 +20,12 @@ function [tArray, solArray, nodes] = heatSolveTheta(p,...
     u0Func , mu, theta, tEnd, N, dt)
 
     h = 1/(N+1);
+    
+    nodes_f = @(x) - x.^2 + x; % Gaussian Distribution
     nodes = (h:h:(1-h))';
-    u0 = zeros(size(nodes));
+    nodes2 = nodes_f(nodes)
+    length(nodes2)
+    
     tRange = [0 tEnd];
     A = makeLaplace(N);
     df = @(t, x) - (mu/h^2) * A;   
@@ -29,6 +33,6 @@ function [tArray, solArray, nodes] = heatSolveTheta(p,...
     
     [tArray,solArray] = odeSolveTheta(f, tRange, nodes, df, theta, dt); 
     
-    solArray = [u0Func(0) solArray u0Func(tEnd)];
+    %solArray = [u0Func(0) solArray u0Func(tEnd)];
 
 end 
