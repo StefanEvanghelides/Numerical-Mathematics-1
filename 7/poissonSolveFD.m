@@ -29,12 +29,12 @@ function [sol, nodes] = poissonSolveFD(f, g, N, precon, tol)
     x0 = zeros(N,1);
     
     alpha = 0.5;
-    
-    lambda_max = eigs(A,1);
-    lambda_min = eigs(A,1,'SM');
-    alpha_opt = 2 / (lambda_max + lambda_min);
-    
-   
+%     
+%     lambda_max = eigs(A,1);
+%     lambda_min = eigs(A,1,'SM');
+%     alpha_opt = 2 / (lambda_max + lambda_min);
+%     
+%    
     switch precon
         case 'jacobi'
             P = spdiags(diag(A), 0, size(A, 1), size(A, 2));
@@ -44,7 +44,7 @@ function [sol, nodes] = poissonSolveFD(f, g, N, precon, tol)
             P = [];
     end
     
-    [u, ~, ~] = iterMethod(A,b,x0,tol,maxIt,P,dynamic,alpha_opt);
+    [u, ~, ~] = iterMethod(A,b,x0,tol,maxIt,P,dynamic,0);
      
     sol = [g(1); u; g(2)];
 end
